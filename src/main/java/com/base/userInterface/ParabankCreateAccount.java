@@ -18,8 +18,9 @@ public class ParabankCreateAccount extends PageObject {
     public static final Target SSN = Target.the("campo texto SSN").located(By.xpath("//input[@id='customer.ssn']"));
     public static final Target USERNAAME = Target.the("campo texto USUARIO").located(By.xpath("//input[@id='customer.username']"));
     public static final Target PASSWORD = Target.the("campo texto CONTRASEÑA").located(By.xpath("//input[@id='customer.password']"));
-    public static final Target  PASSWORD_CONFIRM = Target.the("campo texto CONFIRMAR_CONTRASEÑA").located(By.xpath("//input[@id='repeatedPassword']"));
-    public static final Target  BUTTON_REGISTER = Target.the("boton REGISTAR").located(By.xpath("//input[@value='Register']"));
-
+    public static final Target PASSWORD_CONFIRM = Target.the("campo texto CONFIRMAR_CONTRASEÑA").located(By.xpath("//input[@id='repeatedPassword']"));
+    public static final Target BUTTON_REGISTER = Target.the("boton REGISTAR").located(By.xpath("//input[@value='Register']"));
+    public static final Target MESSAGE_OK = Target.the("mensaje exitoso").located(By.xpath("//p[text()='Your account was created successfully. You are now logged in.']"));
+    public static final Target LINK_LOGOUT = Target.the("link LOG OUT").located(By.xpath("//a[contains(text(),'Log Out')]"));
 
 }

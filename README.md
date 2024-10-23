@@ -38,9 +38,6 @@ Dentro del archivo <code>serenity.properties</code> modificar de ser necesario l
 | report.customfields.environment                                            | Especifica en qué ambiente se están ejecutando las pruebas. Ej. UAT, DEV, STG.                                                                                                                                                                                                                                                                                                                                                                                   |
 | report.customfields.user                                                   | Especifica el usuario que está ejecutando las pruebas.                                                                                                                                                                                                                                                                                                                                                                                                           |
 | report.customfields.squad                                                  | Especifica el nombre del equipo que está ejecutando las pruebas automatizadas.                                                                                                                                                                                                                                                                                                                                                                                   |
-| traceability.integration.jira.report-attachment                            | Especifica si se adjuntará el reporte de resultados de pruebas en Jira. <br/>Admite los valores <code>true</code>/<code>false</code>. <br/><br/> **Nota:** Tomar en consideración que no deben tener espacios. |                                                                                                                                                                                                                                                                                                                             |
-| traceability.manager.execution.source                                      | Especifica desde dónde se ejecutará la integración con Xray/Jira, si es local o desde el pipeline. <br/>Admite los valores <br/><code>local</code>: En caso se desee realizar la integración de manera local. <br/><code>remote</code>: Cuando la integración se va a manejar por medio de la pipeline, <br/><code>none</code>: En caso que no se desee realizar ningún tipo de integración con Jira/Xray. <br/><br/> **Nota:** Tomar en consideración que no deben tener espacios. |
-| traceability.integration.xray.synchcronization                             | Especifica si se realizará la sincronización de los archivos .feature con Jira. Admite los valores <code>true</code>/<code>false</code>. <br/><br/> **Nota:** Tomar en consideración que no deben tener espacios. |                                                                                                                                                                                                                                                                                                                                    |
 
 
 ## Execute
@@ -57,14 +54,10 @@ environments {
     }
     dev {
         restapi.baseurl.zippopotam = "https://api.zippopotam.us"
-        restapi.baseurl.extern = "https://apis.dev.interbank.pe"
-        restapi.baseurl.intern = "https://api.dev.interbank.per"
         restapi.baseurl.regresIn = "https://reqres.in"
     }
     uat {
         restapi.baseurl.zippopotam = "https://api.zippopotam.us"
-        restapi.baseurl.extern = "https://apis.uat.interbank.pe"
-        restapi.baseurl.intern = "https://api.uat.interbank.per"
         restapi.baseurl.regresIn = "https://reqres.in"
     }
 }
@@ -156,47 +149,59 @@ El template de pruebas automatizadas cuenta con la siguiente estructura:
 
 ````text 
 sigla_app-functional_purpose-test-web/                        
-├───devops
-│   ├───pipelines
-│   ├───templates
-│   │   └───jobs
-│   └───variables
-├───src
-│   ├───main
-│   │   └───java
-│   │       └───pe
-│   │           └───interbank
-│   │               └───dso
-│   │                   ├───exceptions
-│   │                   ├───interaction
-│   │                   │   ├───package1
-│   │                   │   └───package1
-│   │                   ├───model
-│   │                   ├───question
-│   │                   │   └───package1
-│   │                   │   └───package2
-│   │                   ├───tasks
-│   │                   ├───userInterface
-│   │                   └───util
-│   └───test
-│       ├───java
-│       │   └───pe
-│       │       └───interbank
-│       │           └───dso
-│       │               ├───runner
-│       │               ├───stepdefinition
-│       │               └───util
-│       └───resources
-│           ├───asset
-│           ├───driver
-│           └───feature
-
+├───src/
+│   ├───main/
+│   │   ├───java/
+│   │   │   └───com/
+│   │   │       └───base/
+│   │   │           ├───interaction/
+│   │   │           │   ├───homepage/
+│   │   │           │   │   └───SelectLogIn.java
+│   │   │           │   └───openaccount/
+│   │   │           │       ├───SelectLogOut.java
+│   │   │           │       ├───SelectRegisterButton.java
+│   │   │           │       └───SelectRegisterLink.java
+│   │   │           ├───model/
+│   │   │           │   ├───ClientParabank.java
+│   │   │           │   └───UsuarioParabank.java
+│   │   │           ├───question/
+│   │   │           │   ├───ElementIsVisible.java
+│   │   │           │   └───TextOfElement.java
+│   │   │           ├───tasks/
+│   │   │           │   ├───AbrirPaginaPrincipal.java
+│   │   │           │   ├───IngresaFormulario.java
+│   │   │           │   └───IngresarCredenciales.java
+│   │   │           ├───userInterface/
+│   │   │           │   ├───ParabankCreateAccount.java
+│   │   │           │   └───ParabankLogin.java
+│   │   │           └───util/
+│   │   │               ├───DeleteCookies.java
+│   │   │               └───Util.java
+│   │   └───resources/
+│   └───test/
+│       ├───java/
+│       │   └───com/
+│       │       └───base/
+│       │           ├───runner/
+│       │           │   └───CucumberTestSuite.java
+│       │           └───stepdefinition/
+│       │               └───CasoEncoraStepDefinition.java
+│       └───resources/
+│           ├───asset/
+│           ├───feature/
+│           │   └───CasoEncora.feature
+│           └───serenity.conf
+├───.gitignore
+├───build.gradle
+├───gradle.properties
+├───gradlew
+├───gradlew.bat
+├───README.md
+├───serenity.properties
+└───settings.gradle
 
 ````
-
-> Para ver mayor detalle del arquetipo accede al repositorio [ibkteam/ads-web-testing-archetype](https://bitbucket.org/ibkteam/ads-web-testing-archetype/src/master/README.md).
 
 ## Who do I talk to?
 
 - Propietario o administrador del repositorio
-- Otro contacto del equipo

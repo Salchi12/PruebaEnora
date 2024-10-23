@@ -1,4 +1,4 @@
-package pe.interbank.dso.util;
+package com.base.util;
 
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
