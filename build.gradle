@@ -1,0 +1,62 @@
+gradle.startParameter.continueOnFailure = true
+
+allprojects {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+
+    dependencies {
+        classpath "net.serenity-bdd:serenity-gradle-plugin:${serenityCoreVersion}"
+        classpath("net.serenity-bdd:serenity-single-page-report:${serenitySingleReport}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: "net.serenity-bdd.serenity-gradle-plugin"
+
+dependencies {
+
+    compileOnly "org.projectlombok:lombok:${projectLombok}"
+    annotationProcessor "org.projectlombok:lombok:${projectLombok}"
+    implementation "org.springframework:spring-core:${springCore}"
+    implementation "org.slf4j:slf4j-api:${slf4jVersion}"
+    implementation "ch.qos.logback:logback-classic:${logbackVersion}"
+    implementation "net.serenity-bdd:serenity-model:${serenityCoreVersion}"
+    implementation "net.serenity-bdd:serenity-screenplay:${serenityCoreVersion}"
+    testImplementation "net.serenity-bdd:serenity-core:${serenityCoreVersion}"
+    testImplementation "net.serenity-bdd:serenity-rest-assured:${serenityCoreVersion}"
+    testImplementation "net.serenity-bdd:serenity-junit:${serenityCoreVersion}"
+    testImplementation "net.serenity-bdd:serenity-spring:${serenityCoreVersion}"
+    implementation "net.serenity-bdd:serenity-cucumber:${serenityCucumberVersion}"
+    testCompileOnly "org.projectlombok:lombok:${projectLombok}"
+    testAnnotationProcessor "org.projectlombok:lombok:${projectLombok}"
+}
+
+sourceCompatibility = '17'
+targetCompatibility = '17'
+configurations {
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+}
+
+test {
+    testLogging.showStandardStreams = true
+    systemProperties System.getProperties()
+    systemProperty "cucumber.filter.tags", System.getProperty("cucumber.filter.tags")
+}
+
+
+test.finalizedBy(aggregate)
